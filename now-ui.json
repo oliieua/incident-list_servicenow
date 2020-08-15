@@ -1,0 +1,38 @@
+{
+	"components": {
+	    "x-523869-incident-list": {
+	        "uiBuilder": {
+				"label": "Incident List",
+				"icon": "circle-exclamation-fill",
+				"description": "Fetched incidents with ability to delete."
+			},
+			"actions": [
+				{
+					"name": "FETCH_INCIDENT_LIST",
+					"description": "Fetch an incident list" 
+				},
+				{
+					"name": "FETCH_INCIDENT_LIST_SUCCESS",
+					"description": "Adds an incident list to state"
+				},
+				{
+					"name": "DELETE_INCIDENT_ITEM",
+					"description": "Removes an incident from DB"
+				},
+				{
+					"name": "NOW_DROPDOWN_PANEL#ITEM_CLICKED",
+					"description": "Defines what kind of card action was be clicked"
+				},
+				{
+					"name": "NOW_MODAL#OPENED_SET",
+					"description": "Closes the modal window"
+				},
+				{
+					"name": "NOW_MODAL#FOOTER_ACTION_CLICKED",
+					"description": "Removes an incident from data base (modal window)"
+				}
+			]
+	    }
+	},
+	"scopeName": "x_523869_test_in_0"
+}

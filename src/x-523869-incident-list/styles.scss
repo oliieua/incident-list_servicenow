@@ -1,0 +1,34 @@
+@import '@servicenow/sass-kit/host';
+
+.incident-list {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    .incident-list_header {
+        width: 100%;
+        text-align: center;
+    }
+    .incident {
+        width: calc(50% - 20px);
+        margin: 5px;
+    }
+    .modal-window {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        .modal-item {
+            width: calc(50% - 20px);
+            margin: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px grey solid;
+            .modal-item-title {
+                color: grey;   
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
