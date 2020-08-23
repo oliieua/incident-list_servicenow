@@ -5,12 +5,45 @@ import { actionHandlers } from "./actions";
 import "@servicenow/now-template-card";
 import "@servicenow/now-modal";
 
-const view = (state,) => {
-	const { incidents, isIncidentModal, incidentToShow, inputValue } = state;
+const changeSearchVal = (e, dispatch) => {
+	dispatch("UPDATE_SEARCH_VALUE", {inpValue: e.target.value.toLowerCase().trim()});
+};
+
+const changeStateSearch = (e, dispatch) => {
+	dispatch("CHANGE_STATE_SELECT", {stateSearch: e.target.value});
+};
+
+const view = (state, {dispatch}) => {
+	const { incidents, isIncidentModal, incidentToShow, foundIncidents, isSearch } = state;
+	const renderIncidents = (!!foundIncidents.length || isSearch) ? foundIncidents : incidents;
 	return (
 		<div className="incident-list">
 			<h2 className="incident-list_header">Incidents</h2>
-			{incidents && incidents.map(incident => (
+			{renderIncidents && <div className="search-area">
+				<input
+					oninput={(e) => changeSearchVal(e, dispatch)}
+					placeholder="Search by description"
+					onkeyup={(e) => {
+						if(e.keyCode === 13) {
+							dispatch("FIND_INCIDENTS");
+						}
+					}}
+				/>
+				<button onclick={() => dispatch("FIND_INCIDENTS")}>Search</button>
+				{state.inpValue && <div className="search-area-select">
+					<label>State: </label>
+					<select name="state" onchange={(e) => changeStateSearch(e, dispatch)}>
+						<option value="all">All</option>
+						<option value="new">New</option>
+						<option value="in progress">In progress</option>
+						<option value="on hold">On Hold</option>
+						<option value="resolved">Resolved</option>
+						<option value="closed">Closed</option>
+						<option value="canceled">Canceled</option>
+					</select>
+				</div>}
+			</div>}
+			{renderIncidents && renderIncidents.map(incident => (
 				<now-template-card-assist
 					tagline={incident.tagline}
 					actions={incident.actions}
@@ -85,7 +118,11 @@ createCustomElement('x-523869-incident-list', {
 	actionHandlers,
 	renderer: {type: snabbdom},
 	initialState: {
-		isIncidentModal: false
+		isIncidentModal: false,
+		inpValue: "",
+		foundIncidents: [],
+		isSearch: false,
+		stateSearch: "all"
 	},
 	view,
 	styles

@@ -91,5 +91,27 @@ export const actionHandlers = {
         const { incidentToShow } = state;
         dispatch("DELETE_INCIDENT_ITEM", { sys_id: incidentToShow.sys_id });
         updateState({isIncidentModal: false});
+    },
+    "UPDATE_SEARCH_VALUE": (coeffects) => {
+        const { updateState, action} = coeffects;
+        updateState({
+            inpValue: action.payload.inpValue,
+        });
+    },
+    "FIND_INCIDENTS": (coeffects) => {
+        const { updateState, state } = coeffects;
+        updateState({
+            foundIncidents: !!state.inpValue ? state.incidents.filter(incident =>
+                state.stateSearch === "all" ? incident.heading.label.toLowerCase().match(state.inpValue) :
+            (incident.heading.label.toLowerCase().match(state.inpValue) && incident.content[1].value.value.toLowerCase() === state.stateSearch)) :
+            [],
+            isSearch: !!state.inpValue ? true : false
+        });
+    },
+    "CHANGE_STATE_SELECT": (coeffects) => {
+        const { updateState, action } = coeffects;
+        updateState({
+            stateSearch: action.payload.stateSearch
+        });
     }
 }
